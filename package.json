@@ -1,6 +1,6 @@
 {
     "name": "@itrabbit/payload-swagger-plugin",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Payload CMS plugin for generate swagger documentation",
     "main": "lib/index.js",
     "repository": {

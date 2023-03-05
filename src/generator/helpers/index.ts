@@ -23,6 +23,10 @@ export class SwaggerHelper {
         return `#/components/schemas/${name}`;
     }
 
+    static definitionRef(name: string) {
+        return `#/definitions/${name}`;
+    }
+
     static nameFromSlug(slug: string, suffix: string = ''): string {
         return upperFirst(camelCase(`${slug}${suffix}`));
     }

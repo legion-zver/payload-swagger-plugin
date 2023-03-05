@@ -4,9 +4,32 @@ Payload CMS plugin for generate swagger documentation.
 
 > The plugin is under development!
 
+- [ ] Collection fields
+    - [x] text, textarea, email, code, number, date
+    - [x] radio, select, checkbox
+    - [x] relationship, upload
+    - [ ] relationship with many `relationTo` 
+    - [x] row, collapsible
+    - [x] richText
+    - [ ] blocks
+    - [x] point
+    - [x] group
+    - [x] array
+    - [x] json 
+    - [ ] tabs
+    - [ ] ui
+- [x] Collection timestamp
 - [x] CRUD for collections
 - [x] CRUD for version collections
-- [ ] Auth Operations (now partial support - `login`, `logout`, `me`)
+- [ ] Auth Operations
+  - [x] login
+  - [x] logout
+  - [ ] reset password
+  - [ ] forgot password
+  - [ ] verify email
+  - [ ] unlock
+  - [ ] refresh token
+  - [x] me
 - [ ] Custom Endpoints
 - [ ] Preferences
 - [ ] Global
