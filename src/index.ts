@@ -32,22 +32,26 @@ function swagger({collections = [], locale = DEFAULT_LOCALE, path = DEFAULT_SWAG
         // Update admin config, set alias for plugin
         config.admin = {
             ...config.admin,
-            webpack: (webpackConfig) => {
-                const modifiedConfig = {
-                    ...webpackConfig,
-                    resolve: {
-                        ...webpackConfig.resolve,
-                        alias: {
-                            ...webpackConfig.resolve?.alias,
-                            '@itrabbit/payload-swagger-plugin/options': nodePath.resolve(__dirname, './options'),
-                            '@itrabbit/payload-swagger-plugin': nodePath.resolve(__dirname, './mock'),
+            webpack: ((webpack) => {
+                return (webpackConfig) => {
+                    const modifiedConfig = {
+                        ...webpackConfig,
+                        resolve: {
+                            ...webpackConfig.resolve,
+                            alias: {
+                                ...webpackConfig.resolve?.alias,
+                                '@itrabbit/payload-swagger-plugin/options': nodePath.resolve(__dirname, './options'),
+                                '@itrabbit/payload-swagger-plugin': nodePath.resolve(__dirname, './mock'),
+                            },
                         },
-                    },
+                    };
+                    if (webpack) {
+                        return webpack(modifiedConfig);
+                    }
+                    return modifiedConfig;
                 };
-                return config.admin?.webpack?.(modifiedConfig) ?? modifiedConfig;
-            },
+            })(config.admin?.webpack),
         };
-
         return config;
     };
 }
