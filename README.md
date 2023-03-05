@@ -2,6 +2,15 @@
 
 Payload CMS plugin for generate swagger documentation.
 
+> The plugin is under development!
+
+- [x] CRUD for collections
+- [x] CRUD for version collections
+- [ ] Auth Operations (now partial support - `login`, `logout`, `me`)
+- [ ] Custom Endpoints
+- [ ] Preferences
+- [ ] Global
+
 ## Getting started
 
 1. Install the package with `npm i @itrabbit/payload-swagger-plugin` or `yarn add @itrabbit/payload-swagger-plugin`.
