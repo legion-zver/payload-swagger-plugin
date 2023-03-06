@@ -1,13 +1,19 @@
 import {JsonObject} from 'swagger-ui-express';
 import {SanitizedConfig} from 'payload/dist/config/types';
 
-import {ErrorResponseGenerator, LoginResponseGenerator, PaginationResponseGenerator} from './responses';
+import {
+    MeResponseGenerator,
+    ErrorResponseGenerator,
+    LoginResponseGenerator,
+    MessageResponseGenerator,
+    PaginationResponseGenerator,
+} from './responses';
 import {CREATE_DTO_NAME_SUFFIX, UPDATE_DTO_NAME_SUFFIX} from './constants';
 import {EntryDtoGenerator, LoginDtoGenerator} from './dto';
 import {PayloadHelper, SwaggerHelper} from './helpers';
 import {ParametersGenerator} from './parameters';
-import {EntryGenerator} from './entry';
 import {CollectionConfig} from 'payload/types';
+import {EntryGenerator} from './entry';
 
 export type SwaggerGeneratorOptions = {
     collections: CollectionConfig['slug'][];
@@ -49,7 +55,9 @@ export class SwaggerGenerator {
         };
 
         const errorResponse = ErrorResponseGenerator.generate();
+        const messageResponse = MessageResponseGenerator.generate();
         swagger.components.schemas[errorResponse.name] = errorResponse.scheme;
+        swagger.components.schemas[messageResponse.name] = messageResponse.scheme;
 
         config.collections.forEach((collection) => {
             if (typeof options?.collections !== 'undefined') {
@@ -346,8 +354,10 @@ export class SwaggerGenerator {
             // auth
             if (collection.auth) {
                 const loginDto = LoginDtoGenerator.generate(collection);
+                const meResponse = MeResponseGenerator.generate(collection);
                 const loginResponse = LoginResponseGenerator.generate(collection);
                 swagger.components.schemas[loginDto.name] = loginDto.scheme;
+                swagger.components.schemas[meResponse.name] = meResponse.scheme;
                 swagger.components.schemas[loginResponse.name] = loginResponse.scheme;
                 swagger.paths[`/api/${collection.slug}/me`] = {
                     get: {
@@ -360,7 +370,7 @@ export class SwaggerGenerator {
                                 content: {
                                     ['application/json']: {
                                         schema: {
-                                            $ref: SwaggerHelper.componentRef(entry.name),
+                                            $ref: SwaggerHelper.componentRef(meResponse.name),
                                         },
                                     },
                                 },
@@ -424,7 +434,17 @@ export class SwaggerGenerator {
                         operationId: SwaggerHelper.operationIdFromSlug(collection.slug, 'logout'),
                         responses: {
                             ['204']: {
-                                description: 'Success',
+                                description: 'Success logout without response data',
+                            },
+                            ['200']: {
+                                description: 'Success logout',
+                                content: {
+                                    ['application/json']: {
+                                        schema: {
+                                            $ref: SwaggerHelper.componentRef(messageResponse.name),
+                                        },
+                                    },
+                                },
                             },
                             ['401']: {
                                 description: 'Unauthorized',

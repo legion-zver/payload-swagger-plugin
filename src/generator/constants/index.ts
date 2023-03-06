@@ -7,5 +7,7 @@ export const ENTRY_NAME_SUFFIX = 'Entry';
 export const VERSION_ENTRY_NAME_SUFFIX = 'VersionEntry';
 
 export const PAGINATION_RESPONSE_NAME_SUFFIX = 'PaginationResponse';
+export const MESSAGE_RESPONSE_NAME_SUFFIX = 'MessageResponse';
 export const LOGIN_RESPONSE_NAME_SUFFIX = 'LoginResponse';
 export const ERROR_RESPONSE_NAME_SUFFIX = 'ErrorResponse';
+export const ME_RESPONSE_NAME_SUFFIX = 'MeResponse';

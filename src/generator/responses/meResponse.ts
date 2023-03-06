@@ -1,28 +1,28 @@
 import {SanitizedCollectionConfig} from 'payload/types';
 
-import {ENTRY_NAME_SUFFIX, LOGIN_RESPONSE_NAME_SUFFIX} from '../constants';
+import {ENTRY_NAME_SUFFIX, LOGIN_RESPONSE_NAME_SUFFIX, ME_RESPONSE_NAME_SUFFIX} from '../constants';
 import {SwaggerComponent} from '../types';
 import {SwaggerHelper} from '../helpers';
 
-export type LoginResponseGenerateOptions = {
+export type MeResponseGenerateOptions = {
     userComponentName?: string;
 };
 
-export class LoginResponseGenerator {
-    static generate(collection: SanitizedCollectionConfig, options?: LoginResponseGenerateOptions): SwaggerComponent {
+export class MeResponseGenerator {
+    static generate(collection: SanitizedCollectionConfig, options?: MeResponseGenerateOptions): SwaggerComponent {
         return {
-            name: SwaggerHelper.nameFromSlug(collection.slug, LOGIN_RESPONSE_NAME_SUFFIX),
+            name: SwaggerHelper.nameFromSlug(collection.slug, ME_RESPONSE_NAME_SUFFIX),
             scheme: {
                 type: 'object',
                 properties: {
-                    message: {
-                        type: 'string',
-                    },
                     user: {
                         $ref: SwaggerHelper.componentRef(
                             options?.userComponentName ??
                                 SwaggerHelper.nameFromSlug(collection.slug, ENTRY_NAME_SUFFIX),
                         ),
+                    },
+                    collection: {
+                        type: 'string',
                     },
                     token: {
                         type: 'string',
