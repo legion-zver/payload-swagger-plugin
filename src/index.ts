@@ -14,14 +14,13 @@ function swagger({collections = [], locale = DEFAULT_LOCALE, path = DEFAULT_SWAG
             return (payload: Payload) => {
                 // Check express
                 if (!payload.express) {
-                    throw new Error('Invalid express instance');
+                    payload.logger.warn('Skip swagger plugin, express is undefined');
+                } else {
+                    // Generate Swagger document
+                    const swaggerDocument = SwaggerGenerator.generate(payload.config, {collections, locale});
+                    // Use swagger middleware
+                    payload.express.use(path, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
                 }
-                // Generate Swagger document
-                const swaggerDocument = SwaggerGenerator.generate(payload.config, {collections, locale});
-
-                // Use swagger middleware
-                payload.express.use(path, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
                 // Next onInit
                 if (onInit) {
                     return onInit(payload);
