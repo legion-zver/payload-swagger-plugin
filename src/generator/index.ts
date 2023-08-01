@@ -355,7 +355,7 @@ export class SwaggerGenerator {
             // custom endpoints
             if ((collection.endpoints?.length ?? 0) > 0) {
                 for (const endpoint of collection.endpoints) {
-                    const key = `/api/${collection.slug}/${endpoint.path}`;
+                    const key = `/api/${collection.slug}${endpoint.path}`;
                     swagger.paths[key] = {
                         ...swagger.paths[key],
                         [endpoint.method]: {
