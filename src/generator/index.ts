@@ -18,6 +18,7 @@ import {EntryGenerator} from './entry';
 
 export type SwaggerGeneratorOptions = {
     collections: CollectionConfig['slug'][];
+    version?: string;
     locale?: string;
 };
 
@@ -30,7 +31,7 @@ export class SwaggerGenerator {
                 title: `${['Swagger', config.admin.meta.titleSuffix.trim()]
                     .filter((v) => v.length > 1)
                     .join(' ')} API - OpenAPI 3.0`,
-                version: process.env.VERSION || '0.0.1',
+                version: options?.version ?? (process.env.VERSION || '0.0.1'),
             },
             tags: [],
             paths: {},

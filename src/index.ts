@@ -7,7 +7,7 @@ import {DEFAULT_LOCALE, DEFAULT_SWAGGER_PATH} from './constants';
 import {SwaggerPluginOptions} from './options';
 import {SwaggerGenerator} from './generator';
 
-function swagger({collections = [], locale = DEFAULT_LOCALE, path = DEFAULT_SWAGGER_PATH}: SwaggerPluginOptions = {}) {
+function swagger({collections = [], version, locale = DEFAULT_LOCALE, path = DEFAULT_SWAGGER_PATH}: SwaggerPluginOptions = {}) {
     return (config: Config): Config => {
         // Wrap onInit
         config.onInit = ((onInit) => {
@@ -17,7 +17,7 @@ function swagger({collections = [], locale = DEFAULT_LOCALE, path = DEFAULT_SWAG
                     payload.logger.warn('Skip swagger plugin, express is undefined');
                 } else {
                     // Generate Swagger document
-                    const swaggerDocument = SwaggerGenerator.generate(payload.config, {collections, locale});
+                    const swaggerDocument = SwaggerGenerator.generate(payload.config, {collections, version, locale});
                     // Use swagger middleware
                     payload.express.use(path, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
                 }

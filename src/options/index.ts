@@ -22,4 +22,11 @@ export interface SwaggerPluginOptions {
      * Default: en
      */
     locale?: string;
+
+    /**
+     * Version for documentation
+     *
+     * Default: process.env.VERSION
+     */
+    version?: string;
 }
