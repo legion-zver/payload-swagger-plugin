@@ -1,3 +1,4 @@
+import {merge} from 'lodash';
 import {JsonObject} from 'swagger-ui-express';
 import {SanitizedConfig} from 'payload/dist/config/types';
 
@@ -351,6 +352,20 @@ export class SwaggerGenerator {
                 };
             }
 
+            // custom endpoints
+            if ((collection.endpoints?.length ?? 0) > 0) {
+                for (const endpoint of collection.endpoints) {
+                    const key = `/api/${collection.slug}/${endpoint.path}`;
+                    swagger.paths[key] = {
+                        ...swagger.paths[key],
+                        [endpoint.method]: {
+                            ...(endpoint.custom ?? {}).swagger,
+                            tags,
+                        },
+                    };
+                }
+            }
+
             // auth
             if (collection.auth) {
                 const loginDto = LoginDtoGenerator.generate(collection);
@@ -460,6 +475,9 @@ export class SwaggerGenerator {
                     },
                 };
             }
+
+            // custom
+            merge(swagger, (collection.custom ?? {}).swagger ?? {});
         });
 
         return swagger;

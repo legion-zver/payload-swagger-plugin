@@ -30,7 +30,7 @@ Payload CMS plugin for generate swagger documentation.
   - [ ] unlock
   - [ ] refresh token
   - [x] me
-- [ ] Custom Endpoints
+- [x] Custom Endpoints (use `collection.endpoints[n].custom.swagger` append path information, use `collection.custom.swagger` for append other info to swagger)
 - [ ] Preferences
 - [ ] Global
 
